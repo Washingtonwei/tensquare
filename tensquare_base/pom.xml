@@ -60,7 +60,7 @@
                 <version>1.2.0</version>
                 <configuration>
                     <imageName>192.168.85.132:5000/${project.artifactId}:${project.version}</imageName>
-                    <baseImage>openjdk</baseImage>
+                    <baseImage>jdk1.8</baseImage>
                     <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
