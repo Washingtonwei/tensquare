@@ -1,0 +1,42 @@
+server:
+  port: 9011
+spring:
+  application:
+    name: tensquare-manager-gateway
+  rabbitmq: # this is for spring config bus
+    host: 192.168.85.132
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka
+  instance:
+    prefer-ip-address: true
+jwt:
+  config:
+    key: itcast
+zuul:
+  routes:
+    tensquare-gathering:
+      path: /gathering/** #URL pattern
+      serviceId: tensquare-gathering #Service id in Eureka
+    tensquare-article:
+      path: /article/**
+      serviceId: tensquare-article
+    tensquare-base:
+      path: /base/**
+      serviceId: tensquare-base
+    tensquare-friend:
+      path: /friend/**
+      serviceId: tensquare-friend
+    tensquare-qa:
+      path: /qa/**
+      serviceId: tensquare-qa
+    tensquare-recruit:
+      path: /recruit/**
+      serviceId: tensquare-recruit
+    tensquare-spit:
+      path: /spit/**
+      serviceId: tensquare-spit
+    tensquare-user:
+      path: /user/**
+      serviceId: tensquare-user

@@ -1,0 +1,21 @@
+server: 
+  port: 9002
+spring: 
+  application:  
+    name: tensquare-recruit
+  datasource:  
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.85.132:3306/tensquare_recruit?characterEncoding=UTF8&useSSL=false
+    username: root
+    password: root
+  jpa: 
+    database: MySQL
+    show-sql: true
+  rabbitmq:
+    host: 192.168.85.132
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka
+  instance:
+    prefer-ip-address: true

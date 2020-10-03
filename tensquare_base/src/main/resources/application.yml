@@ -1,0 +1,26 @@
+# if we are using spring config, this file should be uploaded to GitHub, then we can delete this file
+# from this project
+
+# This microservice will run on port 9001
+server:
+  port: 9001
+# Spring cloud needs the following to find a microservice
+spring:
+  application:
+    name: tensquare-base
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.85.132:3306/tensquare_base?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+  jpa:
+    database: mysql
+    show-sql: true
+  rabbitmq: # this is for spring config bus
+    host: 192.168.85.132
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka
+  instance:
+    prefer-ip-address: true

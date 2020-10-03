@@ -1,0 +1,21 @@
+server: 
+  port: 9005
+spring: 
+  application:  
+    name: tensquare-gathering
+  datasource:  
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.85.132:3306/tensquare_gathering?characterEncoding=UTF8&useSSL=false
+    username: root
+    password: root
+  jpa: 
+    database: MySQL
+    show-sql: true
+  rabbitmq: # this is for spring config bus
+    host: 192.168.85.132
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka
+  instance:
+    prefer-ip-address: true
