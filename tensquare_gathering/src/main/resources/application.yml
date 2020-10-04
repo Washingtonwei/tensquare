@@ -5,9 +5,9 @@ spring:
     name: tensquare-gathering
   datasource:  
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.85.132:3306/tensquare_gathering?characterEncoding=UTF8&useSSL=false
+    url: jdbc:mysql://192.168.85.132:3306/tensquare_gathering?allowPublicKeyRetrieval=true&characterEncoding=UTF8&useSSL=false
     username: root
-    password: root
+    password: 123456
   jpa: 
     database: MySQL
     show-sql: true
@@ -16,6 +16,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.85.132:6868/eureka
+      defaultZone: http://localhost:6868/eureka
   instance:
     prefer-ip-address: true
