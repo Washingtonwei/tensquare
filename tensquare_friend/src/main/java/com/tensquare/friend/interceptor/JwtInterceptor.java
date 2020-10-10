@@ -22,20 +22,20 @@ public class JwtInterceptor implements HandlerInterceptor {
         //So what interceptor is doing is simply parse the token, make it
         //available to the method downstream
         String header = request.getHeader("Authorization");
-        if(header != null && !"".equals(header)){
-            if(header.startsWith("Bearer ")){
+        if (header != null && !"".equals(header)) {
+            if (header.startsWith("Bearer ")) {
                 //Get token
                 String token = header.substring(7);
-                try{
+                try {
                     Claims claims = jwtUtil.parseJWT(token);
 
-                    if("admin".equals(claims.get("roles"))){
+                    if ("admin".equals(claims.get("roles"))) {
                         request.setAttribute("admin_claims", claims);
                     }
-                    if("user".equals(claims.get("roles"))){
+                    if ("user".equals(claims.get("roles"))) {
                         request.setAttribute("user_claims", claims);
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     throw new RuntimeException("Token error");
                 }
             }

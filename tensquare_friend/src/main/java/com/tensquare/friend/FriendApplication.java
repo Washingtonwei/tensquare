@@ -18,7 +18,7 @@ public class FriendApplication {
     }
 
     @Bean
-    public JwtUtil jwtUtil(){
+    public JwtUtil jwtUtil() {
         return new JwtUtil();
     }
 }

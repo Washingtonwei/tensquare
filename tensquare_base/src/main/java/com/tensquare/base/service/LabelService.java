@@ -26,24 +26,24 @@ public class LabelService {
     @Autowired
     private IdWorker idWorker;
 
-    public List<Label> findAll(){
+    public List<Label> findAll() {
         return labelDao.findAll();
     }
 
-    public Label findById(String id){
+    public Label findById(String id) {
         return labelDao.findById(id).get();
     }
 
-    public void save(Label label){
+    public void save(Label label) {
         label.setId(idWorker.nextId() + "");
         labelDao.save(label);
     }
 
-    public void update(Label label){
+    public void update(Label label) {
         labelDao.save(label);
     }
 
-    public void deleteById(String id){
+    public void deleteById(String id) {
         labelDao.deleteById(id);
     }
 
@@ -54,11 +54,11 @@ public class LabelService {
                 //1. create a list to store the predicates temporarily
                 List<Predicate> list = new ArrayList<>();
                 //2. create predicates
-                if(label.getLabelname() != null && !"".equals(label.getLabelname())){
-                    Predicate p = cb.like(root.get("labelname").as(String.class), "%" + label.getLabelname() + "%" ); //where labelname like "%...%"
+                if (label.getLabelname() != null && !"".equals(label.getLabelname())) {
+                    Predicate p = cb.like(root.get("labelname").as(String.class), "%" + label.getLabelname() + "%"); //where labelname like "%...%"
                     list.add(p);
                 }
-                if(label.getState() != null && !"".equals(label.getState())){
+                if (label.getState() != null && !"".equals(label.getState())) {
                     Predicate p = cb.equal(root.get("state").as(String.class), label.getState());
                     list.add(p);
                 }
@@ -78,11 +78,11 @@ public class LabelService {
                 //1. create a list to store the predicates temporarily
                 List<Predicate> list = new ArrayList<>();
                 //2. create predicates
-                if(label.getLabelname() != null && !"".equals(label.getLabelname())){
-                    Predicate p = cb.like(root.get("labelname").as(String.class), "%" + label.getLabelname() + "%" ); //where labelname like "%...%"
+                if (label.getLabelname() != null && !"".equals(label.getLabelname())) {
+                    Predicate p = cb.like(root.get("labelname").as(String.class), "%" + label.getLabelname() + "%"); //where labelname like "%...%"
                     list.add(p);
                 }
-                if(label.getState() != null && !"".equals(label.getState())){
+                if (label.getState() != null && !"".equals(label.getState())) {
                     Predicate p = cb.equal(root.get("state").as(String.class), label.getState());
                     list.add(p);
                 }

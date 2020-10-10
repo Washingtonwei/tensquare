@@ -15,8 +15,7 @@ public class WhineApplication {
     }
 
     @Bean
-    public IdWorker idWorker(){
+    public IdWorker idWorker() {
         return new IdWorker();
     }
-
 }

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 public class LabelClientImpl implements LabelClient {
     @Override
     public Result findById(String labelId) {
-        return new Result(false, StatusCode.ERROR,"Hystrix Circuit Breaker triggered!!!!!");
+        return new Result(false, StatusCode.ERROR, "Hystrix Circuit Breaker triggered!!!!!");
     }
 }

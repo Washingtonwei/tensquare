@@ -20,90 +20,86 @@ import java.util.Map;
 @Service
 public class EnterpriseService {
 
-	@Autowired
-	private EnterpriseDao enterpriseDao;
-	
-	@Autowired
-	private IdWorker idWorker;
+    @Autowired
+    private EnterpriseDao enterpriseDao;
 
-	public List<Enterprise> hotList(String ishot){
-		return enterpriseDao.findByIshot(ishot);
-	}
+    @Autowired
+    private IdWorker idWorker;
 
-	public List<Enterprise> findAll() {
-		return enterpriseDao.findAll();
-	}
+    public List<Enterprise> hotList(String ishot) {
+        return enterpriseDao.findByIshot(ishot);
+    }
 
+    public List<Enterprise> findAll() {
+        return enterpriseDao.findAll();
+    }
 
-	public Page<Enterprise> findSearch(Map whereMap, int page, int size) {
-		Specification<Enterprise> specification = createSpecification(whereMap);
-		PageRequest pageRequest =  PageRequest.of(page-1, size);
-		return enterpriseDao.findAll(specification, pageRequest);
-	}
+    public Page<Enterprise> findSearch(Map whereMap, int page, int size) {
+        Specification<Enterprise> specification = createSpecification(whereMap);
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        return enterpriseDao.findAll(specification, pageRequest);
+    }
 
-	public List<Enterprise> findSearch(Map whereMap) {
-		Specification<Enterprise> specification = createSpecification(whereMap);
-		return enterpriseDao.findAll(specification);
-	}
+    public List<Enterprise> findSearch(Map whereMap) {
+        Specification<Enterprise> specification = createSpecification(whereMap);
+        return enterpriseDao.findAll(specification);
+    }
 
-	public Enterprise findById(String id) {
-		return enterpriseDao.findById(id).get();
-	}
+    public Enterprise findById(String id) {
+        return enterpriseDao.findById(id).get();
+    }
 
-	public void add(Enterprise enterprise) {
-		enterprise.setId( idWorker.nextId()+"" );
-		enterpriseDao.save(enterprise);
-	}
+    public void add(Enterprise enterprise) {
+        enterprise.setId(idWorker.nextId() + "");
+        enterpriseDao.save(enterprise);
+    }
 
-	public void update(Enterprise enterprise) {
-		enterpriseDao.save(enterprise);
-	}
+    public void update(Enterprise enterprise) {
+        enterpriseDao.save(enterprise);
+    }
 
-	public void deleteById(String id) {
-		enterpriseDao.deleteById(id);
-	}
+    public void deleteById(String id) {
+        enterpriseDao.deleteById(id);
+    }
 
-	private Specification<Enterprise> createSpecification(Map searchMap) {
+    private Specification<Enterprise> createSpecification(Map searchMap) {
 
-		return new Specification<Enterprise>() {
+        return new Specification<Enterprise>() {
 
-			@Override
-			public Predicate toPredicate(Root<Enterprise> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicateList = new ArrayList<Predicate>();
+            @Override
+            public Predicate toPredicate(Root<Enterprise> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicateList = new ArrayList<Predicate>();
                 // ID
-                if (searchMap.get("id")!=null && !"".equals(searchMap.get("id"))) {
-                	predicateList.add(cb.like(root.get("id").as(String.class), "%"+(String)searchMap.get("id")+"%"));
+                if (searchMap.get("id") != null && !"".equals(searchMap.get("id"))) {
+                    predicateList.add(cb.like(root.get("id").as(String.class), "%" + (String) searchMap.get("id") + "%"));
                 }
-                if (searchMap.get("name")!=null && !"".equals(searchMap.get("name"))) {
-                	predicateList.add(cb.like(root.get("name").as(String.class), "%"+(String)searchMap.get("name")+"%"));
+                if (searchMap.get("name") != null && !"".equals(searchMap.get("name"))) {
+                    predicateList.add(cb.like(root.get("name").as(String.class), "%" + (String) searchMap.get("name") + "%"));
                 }
-                if (searchMap.get("summary")!=null && !"".equals(searchMap.get("summary"))) {
-                	predicateList.add(cb.like(root.get("summary").as(String.class), "%"+(String)searchMap.get("summary")+"%"));
+                if (searchMap.get("summary") != null && !"".equals(searchMap.get("summary"))) {
+                    predicateList.add(cb.like(root.get("summary").as(String.class), "%" + (String) searchMap.get("summary") + "%"));
                 }
-                if (searchMap.get("address")!=null && !"".equals(searchMap.get("address"))) {
-                	predicateList.add(cb.like(root.get("address").as(String.class), "%"+(String)searchMap.get("address")+"%"));
+                if (searchMap.get("address") != null && !"".equals(searchMap.get("address"))) {
+                    predicateList.add(cb.like(root.get("address").as(String.class), "%" + (String) searchMap.get("address") + "%"));
                 }
-                if (searchMap.get("labels")!=null && !"".equals(searchMap.get("labels"))) {
-                	predicateList.add(cb.like(root.get("labels").as(String.class), "%"+(String)searchMap.get("labels")+"%"));
+                if (searchMap.get("labels") != null && !"".equals(searchMap.get("labels"))) {
+                    predicateList.add(cb.like(root.get("labels").as(String.class), "%" + (String) searchMap.get("labels") + "%"));
                 }
-                if (searchMap.get("coordinate")!=null && !"".equals(searchMap.get("coordinate"))) {
-                	predicateList.add(cb.like(root.get("coordinate").as(String.class), "%"+(String)searchMap.get("coordinate")+"%"));
+                if (searchMap.get("coordinate") != null && !"".equals(searchMap.get("coordinate"))) {
+                    predicateList.add(cb.like(root.get("coordinate").as(String.class), "%" + (String) searchMap.get("coordinate") + "%"));
                 }
-                if (searchMap.get("ishot")!=null && !"".equals(searchMap.get("ishot"))) {
-                	predicateList.add(cb.like(root.get("ishot").as(String.class), "%"+(String)searchMap.get("ishot")+"%"));
+                if (searchMap.get("ishot") != null && !"".equals(searchMap.get("ishot"))) {
+                    predicateList.add(cb.like(root.get("ishot").as(String.class), "%" + (String) searchMap.get("ishot") + "%"));
                 }
-                if (searchMap.get("logo")!=null && !"".equals(searchMap.get("logo"))) {
-                	predicateList.add(cb.like(root.get("logo").as(String.class), "%"+(String)searchMap.get("logo")+"%"));
+                if (searchMap.get("logo") != null && !"".equals(searchMap.get("logo"))) {
+                    predicateList.add(cb.like(root.get("logo").as(String.class), "%" + (String) searchMap.get("logo") + "%"));
                 }
-                if (searchMap.get("url")!=null && !"".equals(searchMap.get("url"))) {
-                	predicateList.add(cb.like(root.get("url").as(String.class), "%"+(String)searchMap.get("url")+"%"));
+                if (searchMap.get("url") != null && !"".equals(searchMap.get("url"))) {
+                    predicateList.add(cb.like(root.get("url").as(String.class), "%" + (String) searchMap.get("url") + "%"));
                 }
-				
-				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
 
-			}
-		};
-
-	}
-
+                return cb.and(predicateList.toArray(new Predicate[predicateList.size()]));
+            }
+        };
+    }
 }

@@ -18,17 +18,17 @@ public class CommentService {
     @Autowired
     private IdWorker idWorker;
 
-    public void save(Comment comment){
+    public void save(Comment comment) {
         comment.set_id(idWorker.nextId() + "");
         commentDao.save(comment);
     }
 
-    public void deleteById(String commentId){
+    public void deleteById(String commentId) {
         commentDao.deleteById(commentId);
     }
 
     public Page<Comment> findByArticleid(String parentid, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        return commentDao.findByArticleid(parentid, pageable);
+        return commentDao.findByArticleId(parentid, pageable);
     }
 }

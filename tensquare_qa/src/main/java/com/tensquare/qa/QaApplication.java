@@ -1,4 +1,5 @@
 package com.tensquare.qa;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -14,17 +15,17 @@ import util.JwtUtil;
 @EnableFeignClients
 public class QaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(QaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(QaApplication.class, args);
+    }
 
-	@Bean
-	public IdWorker idWorkker(){
-		return new IdWorker(1, 1);
-	}
+    @Bean
+    public IdWorker idWorkker() {
+        return new IdWorker(1, 1);
+    }
 
-	@Bean
-	public JwtUtil jwtUtil(){
-		return new JwtUtil();
-	}
+    @Bean
+    public JwtUtil jwtUtil() {
+        return new JwtUtil();
+    }
 }

@@ -6,137 +6,152 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name="tb_user")
-public class User implements Serializable{
+@Table(name = "tb_user")
+public class User implements Serializable {
 
-	@Id
-	private String id;
-	private String mobile;
-	private String password;
-	private String nickname;
-	private String sex;
-	private java.util.Date birthday;
-	private String avatar;
-	private String email;
-	private java.util.Date regdate;
-	private java.util.Date updatedate;
-	private java.util.Date lastdate;
-	private Long online;
-	private String interest;
-	private String personality;
-	private Integer fanscount;
-	private Integer followcount;
+    @Id
+    private String id;
+    private String mobile;
+    private String password;
+    private String nickname;
+    private String sex;
+    private java.util.Date birthday;
+    private String avatar;
+    private String email;
+    private java.util.Date regdate;
+    private java.util.Date updatedate;
+    private java.util.Date lastdate;
+    private Long online;
+    private String interest;
+    private String personality;
+    private Integer fanscount;
+    private Integer followcount;
 
-	
-	public String getId() {		
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getMobile() {		
-		return mobile;
-	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getPassword() {		
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getMobile() {
+        return mobile;
+    }
 
-	public String getNickname() {		
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-	public String getSex() {		
-		return sex;
-	}
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public java.util.Date getBirthday() {		
-		return birthday;
-	}
-	public void setBirthday(java.util.Date birthday) {
-		this.birthday = birthday;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getAvatar() {		
-		return avatar;
-	}
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+    public String getNickname() {
+        return nickname;
+    }
 
-	public String getEmail() {		
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
-	public java.util.Date getRegdate() {		
-		return regdate;
-	}
-	public void setRegdate(java.util.Date regdate) {
-		this.regdate = regdate;
-	}
+    public String getSex() {
+        return sex;
+    }
 
-	public java.util.Date getUpdatedate() {		
-		return updatedate;
-	}
-	public void setUpdatedate(java.util.Date updatedate) {
-		this.updatedate = updatedate;
-	}
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
-	public java.util.Date getLastdate() {		
-		return lastdate;
-	}
-	public void setLastdate(java.util.Date lastdate) {
-		this.lastdate = lastdate;
-	}
+    public java.util.Date getBirthday() {
+        return birthday;
+    }
 
-	public Long getOnline() {		
-		return online;
-	}
-	public void setOnline(Long online) {
-		this.online = online;
-	}
+    public void setBirthday(java.util.Date birthday) {
+        this.birthday = birthday;
+    }
 
-	public String getInterest() {		
-		return interest;
-	}
-	public void setInterest(String interest) {
-		this.interest = interest;
-	}
+    public String getAvatar() {
+        return avatar;
+    }
 
-	public String getPersonality() {		
-		return personality;
-	}
-	public void setPersonality(String personality) {
-		this.personality = personality;
-	}
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
-	public Integer getFanscount() {		
-		return fanscount;
-	}
-	public void setFanscount(Integer fanscount) {
-		this.fanscount = fanscount;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Integer getFollowcount() {		
-		return followcount;
-	}
-	public void setFollowcount(Integer followcount) {
-		this.followcount = followcount;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public java.util.Date getRegdate() {
+        return regdate;
+    }
+
+    public void setRegdate(java.util.Date regdate) {
+        this.regdate = regdate;
+    }
+
+    public java.util.Date getUpdatedate() {
+        return updatedate;
+    }
+
+    public void setUpdatedate(java.util.Date updatedate) {
+        this.updatedate = updatedate;
+    }
+
+    public java.util.Date getLastdate() {
+        return lastdate;
+    }
+
+    public void setLastdate(java.util.Date lastdate) {
+        this.lastdate = lastdate;
+    }
+
+    public Long getOnline() {
+        return online;
+    }
+
+    public void setOnline(Long online) {
+        this.online = online;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
+
+    public String getPersonality() {
+        return personality;
+    }
+
+    public void setPersonality(String personality) {
+        this.personality = personality;
+    }
+
+    public Integer getFanscount() {
+        return fanscount;
+    }
+
+    public void setFanscount(Integer fanscount) {
+        this.fanscount = fanscount;
+    }
+
+    public Integer getFollowcount() {
+        return followcount;
+    }
+
+    public void setFollowcount(Integer followcount) {
+        this.followcount = followcount;
+    }
 }

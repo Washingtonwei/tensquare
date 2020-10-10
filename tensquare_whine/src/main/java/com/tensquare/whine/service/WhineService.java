@@ -30,62 +30,62 @@ public class WhineService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public List<Whine> findAll(){
+    public List<Whine> findAll() {
         return whineDao.findAll();
     }
 
-    public Whine findById(String id){
+    public Whine findById(String id) {
         return whineDao.findById(id).get();
     }
 
-    public void save(Whine whine){
-        //in spit, user has already provided some data
-        //but the following, we need to provide when a new spit is created
+    public void save(Whine whine) {
+        //in whine, user has already provided some data
+        //but the following, we need to provide when a new whine is created
         //to avoid NPE, we initialize them here
-        whine.set_id(idWorker.nextId()+"");
+        whine.set_id(idWorker.nextId() + "");
         whine.setPublishtime(new Date());
         whine.setVisits(0);
         whine.setShare(0);
         whine.setThumbup(0);
         whine.setComment(0);//number of replies
         whine.setState("1");
-        //If the new spit has a parent spit, then the number of comments
+        //If the new whine has a parent whine, then the number of comments
         // in its parent should be increment by 1
-        if(whine.getParentid()!=null && !"".equals(whine.getParentid())){
+        if (whine.getParentid() != null && !"".equals(whine.getParentid())) {
             Query query = new Query();
             query.addCriteria(Criteria.where("_id").is(whine.getParentid()));
             Update update = new Update();
             update.inc("comment", 1);
-            mongoTemplate.updateFirst(query, update, "spit");
+            mongoTemplate.updateFirst(query, update, "whine");
         }
 
         whineDao.save(whine);
     }
 
-    public void update(Whine whine){
+    public void update(Whine whine) {
         whineDao.save(whine);
     }
 
-    public void deleteById(String id){
+    public void deleteById(String id) {
         whineDao.deleteById(id);
     }
 
-    public Page<Whine> findByParentid(String parentid, int page, int size){
+    public Page<Whine> findByParentid(String parentid, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        return whineDao.findByParentid(parentid, pageable);
+        return whineDao.findByParentId(parentid, pageable);
     }
 
-    public void updateThumbup(String spitId) {
+    public void updateThumbup(String whineId) {
         //First approach: easy but not very efficient, since there are two accesses with DB
-        //Spit spit = spitDao.findById(spitId).get();
-        //spit.setThumbup((spit.getThumbup()==null ? 0 : spit.getThumbup()) + 1);
-        //spitDao.save(spit);
+        //Whine whine = wineDao.findById(whineId).get();
+        //whine.setThumbup((whine.getThumbup()==null ? 0 : whine.getThumbup()) + 1);
+        //wineDao.save(whine);
 
-        //Second approach: use db.spit.update({"_id":"1"},{$inc:{updateThumbup:NumberInt(1)}})
+        //Second approach: use db.whine.update({"_id":"1"},{$inc:{updateThumbup:NumberInt(1)}})
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(spitId));
+        query.addCriteria(Criteria.where("_id").is(whineId));
         Update update = new Update();
         update.inc("thumbup", 1);
-        mongoTemplate.updateFirst(query, update, "spit");
+        mongoTemplate.updateFirst(query, update, "whine");
     }
 }

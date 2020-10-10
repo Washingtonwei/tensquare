@@ -7,146 +7,162 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name="tb_article")
-public class Article implements Serializable{
+@Table(name = "tb_article")
+public class Article implements Serializable {
 
-	@Id
-	private String id;//ID
+    @Id
+    private String id;//ID
+    private String columnid;
+    private String userid;
+    private String title;
+    private String content;
+    private String image;
+    private Date createtime;
+    private Date updatetime;
+    private String ispublic;
+    private String istop;
+    private Integer visits;
+    private Integer thumbup;
+    private Integer comment;
+    private String state;
+    private String channelid;
+    private String url;
+    private String type;
 
-	private String columnid;
-	private String userid;
-	private String title;
-	private String content;
-	private String image;
-	private Date createtime;
-	private Date updatetime;
-	private String ispublic;
-	private String istop;
-	private Integer visits;
-	private Integer thumbup;
-	private Integer comment;
-	private String state;
-	private String channelid;
-	private String url;
-	private String type;
 
-	
-	public String getId() {		
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getColumnid() {		
-		return columnid;
-	}
-	public void setColumnid(String columnid) {
-		this.columnid = columnid;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getUserid() {		
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
+    public String getColumnid() {
+        return columnid;
+    }
 
-	public String getTitle() {		
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setColumnid(String columnid) {
+        this.columnid = columnid;
+    }
 
-	public String getContent() {		
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getUserid() {
+        return userid;
+    }
 
-	public String getImage() {		
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
 
-	public Date getCreatetime() {
-		return createtime;
-	}
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Date getUpdatetime() {
-		return updatetime;
-	}
-	public void setUpdatetime(Date updatetime) {
-		this.updatetime = updatetime;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getIspublic() {		
-		return ispublic;
-	}
-	public void setIspublic(String ispublic) {
-		this.ispublic = ispublic;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public String getIstop() {		
-		return istop;
-	}
-	public void setIstop(String istop) {
-		this.istop = istop;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public Integer getVisits() {		
-		return visits;
-	}
-	public void setVisits(Integer visits) {
-		this.visits = visits;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public Integer getThumbup() {		
-		return thumbup;
-	}
-	public void setThumbup(Integer thumbup) {
-		this.thumbup = thumbup;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public Integer getComment() {		
-		return comment;
-	}
-	public void setComment(Integer comment) {
-		this.comment = comment;
-	}
+    public Date getCreatetime() {
+        return createtime;
+    }
 
-	public String getState() {		
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
 
-	public String getChannelid() {		
-		return channelid;
-	}
-	public void setChannelid(String channelid) {
-		this.channelid = channelid;
-	}
+    public Date getUpdatetime() {
+        return updatetime;
+    }
 
-	public String getUrl() {		
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
 
-	public String getType() {		
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getIspublic() {
+        return ispublic;
+    }
+
+    public void setIspublic(String ispublic) {
+        this.ispublic = ispublic;
+    }
+
+    public String getIstop() {
+        return istop;
+    }
+
+    public void setIstop(String istop) {
+        this.istop = istop;
+    }
+
+    public Integer getVisits() {
+        return visits;
+    }
+
+    public void setVisits(Integer visits) {
+        this.visits = visits;
+    }
+
+    public Integer getThumbup() {
+        return thumbup;
+    }
+
+    public void setThumbup(Integer thumbup) {
+        this.thumbup = thumbup;
+    }
+
+    public Integer getComment() {
+        return comment;
+    }
+
+    public void setComment(Integer comment) {
+        this.comment = comment;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getChannelid() {
+        return channelid;
+    }
+
+    public void setChannelid(String channelid) {
+        this.channelid = channelid;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

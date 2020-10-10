@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.tensquare.article.pojo.Column;
 
-public interface ColumnDao extends JpaRepository<Column,String>,JpaSpecificationExecutor<Column>{
-	
+public interface ColumnDao extends JpaRepository<Column, String>, JpaSpecificationExecutor<Column> {
+
 }

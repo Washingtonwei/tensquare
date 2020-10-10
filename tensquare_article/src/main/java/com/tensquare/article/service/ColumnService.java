@@ -27,71 +27,69 @@ import com.tensquare.article.pojo.Column;
 @Service
 public class ColumnService {
 
-	@Autowired
-	private ColumnDao columnDao;
-	
-	@Autowired
-	private IdWorker idWorker;
+    @Autowired
+    private ColumnDao columnDao;
 
-	public List<Column> findAll() {
-		return columnDao.findAll();
-	}
+    @Autowired
+    private IdWorker idWorker;
 
-	public Page<Column> findSearch(Map whereMap, int page, int size) {
-		Specification<Column> specification = createSpecification(whereMap);
-		PageRequest pageRequest =  PageRequest.of(page-1, size);
-		return columnDao.findAll(specification, pageRequest);
-	}
+    public List<Column> findAll() {
+        return columnDao.findAll();
+    }
 
-	public List<Column> findSearch(Map whereMap) {
-		Specification<Column> specification = createSpecification(whereMap);
-		return columnDao.findAll(specification);
-	}
+    public Page<Column> findSearch(Map whereMap, int page, int size) {
+        Specification<Column> specification = createSpecification(whereMap);
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        return columnDao.findAll(specification, pageRequest);
+    }
 
-	public Column findById(String id) {
-		return columnDao.findById(id).get();
-	}
+    public List<Column> findSearch(Map whereMap) {
+        Specification<Column> specification = createSpecification(whereMap);
+        return columnDao.findAll(specification);
+    }
 
-	public void add(Column column) {
-		column.setId( idWorker.nextId()+"" );
-		columnDao.save(column);
-	}
+    public Column findById(String id) {
+        return columnDao.findById(id).get();
+    }
 
-	public void update(Column column) {
-		columnDao.save(column);
-	}
+    public void add(Column column) {
+        column.setId(idWorker.nextId() + "");
+        columnDao.save(column);
+    }
 
-	public void deleteById(String id) {
-		columnDao.deleteById(id);
-	}
+    public void update(Column column) {
+        columnDao.save(column);
+    }
 
-	private Specification<Column> createSpecification(Map searchMap) {
+    public void deleteById(String id) {
+        columnDao.deleteById(id);
+    }
 
-		return new Specification<Column>() {
+    private Specification<Column> createSpecification(Map searchMap) {
 
-			@Override
-			public Predicate toPredicate(Root<Column> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicateList = new ArrayList<Predicate>();
-                if (searchMap.get("id")!=null && !"".equals(searchMap.get("id"))) {
-                	predicateList.add(cb.like(root.get("id").as(String.class), "%"+(String)searchMap.get("id")+"%"));
+        return new Specification<Column>() {
+
+            @Override
+            public Predicate toPredicate(Root<Column> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicateList = new ArrayList<Predicate>();
+                if (searchMap.get("id") != null && !"".equals(searchMap.get("id"))) {
+                    predicateList.add(cb.like(root.get("id").as(String.class), "%" + (String) searchMap.get("id") + "%"));
                 }
-                if (searchMap.get("name")!=null && !"".equals(searchMap.get("name"))) {
-                	predicateList.add(cb.like(root.get("name").as(String.class), "%"+(String)searchMap.get("name")+"%"));
+                if (searchMap.get("name") != null && !"".equals(searchMap.get("name"))) {
+                    predicateList.add(cb.like(root.get("name").as(String.class), "%" + (String) searchMap.get("name") + "%"));
                 }
-                if (searchMap.get("summary")!=null && !"".equals(searchMap.get("summary"))) {
-                	predicateList.add(cb.like(root.get("summary").as(String.class), "%"+(String)searchMap.get("summary")+"%"));
+                if (searchMap.get("summary") != null && !"".equals(searchMap.get("summary"))) {
+                    predicateList.add(cb.like(root.get("summary").as(String.class), "%" + (String) searchMap.get("summary") + "%"));
                 }
-                if (searchMap.get("userid")!=null && !"".equals(searchMap.get("userid"))) {
-                	predicateList.add(cb.like(root.get("userid").as(String.class), "%"+(String)searchMap.get("userid")+"%"));
+                if (searchMap.get("userid") != null && !"".equals(searchMap.get("userid"))) {
+                    predicateList.add(cb.like(root.get("userid").as(String.class), "%" + (String) searchMap.get("userid") + "%"));
                 }
-                if (searchMap.get("state")!=null && !"".equals(searchMap.get("state"))) {
-                	predicateList.add(cb.like(root.get("state").as(String.class), "%"+(String)searchMap.get("state")+"%"));
+                if (searchMap.get("state") != null && !"".equals(searchMap.get("state"))) {
+                    predicateList.add(cb.like(root.get("state").as(String.class), "%" + (String) searchMap.get("state") + "%"));
                 }
-				
-				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
 
-			}
-		};
-
-	}
+                return cb.and(predicateList.toArray(new Predicate[predicateList.size()]));
+            }
+        };
+    }
 }

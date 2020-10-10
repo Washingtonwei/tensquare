@@ -26,136 +26,135 @@ import java.util.concurrent.TimeUnit;
 @Transactional
 public class UserService {
 
-	@Autowired
-	private UserDao userDao;
-	
-	@Autowired
-	private IdWorker idWorker;
+    @Autowired
+    private UserDao userDao;
 
-	@Autowired
-	private RedisTemplate redisTemplate;
+    @Autowired
+    private IdWorker idWorker;
 
-	@Autowired
-	private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
-	@Autowired
-	private HttpServletRequest request;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public List<User> findAll() {
-		return userDao.findAll();
-	}
+    @Autowired
+    private HttpServletRequest request;
 
-	public Page<User> findSearch(Map whereMap, int page, int size) {
-		Specification<User> specification = createSpecification(whereMap);
-		PageRequest pageRequest =  PageRequest.of(page-1, size);
-		return userDao.findAll(specification, pageRequest);
-	}
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
 
-	public List<User> findSearch(Map whereMap) {
-		Specification<User> specification = createSpecification(whereMap);
-		return userDao.findAll(specification);
-	}
+    public Page<User> findSearch(Map whereMap, int page, int size) {
+        Specification<User> specification = createSpecification(whereMap);
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        return userDao.findAll(specification, pageRequest);
+    }
 
-	public User findById(String id) {
-		return userDao.findById(id).get();
-	}
+    public List<User> findSearch(Map whereMap) {
+        Specification<User> specification = createSpecification(whereMap);
+        return userDao.findAll(specification);
+    }
 
-	public void add(User user) {
-		user.setId( idWorker.nextId()+"" );
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user.setFollowcount(0);
-		user.setFanscount(0);
-		user.setOnline(0L);
-		user.setRegdate(new Date());
-		user.setUpdatedate(new Date());
-		user.setLastdate(new Date());
-		userDao.save(user);
-	}
+    public User findById(String id) {
+        return userDao.findById(id).get();
+    }
 
-	public void update(User user) {
-		userDao.save(user);
-	}
+    public void add(User user) {
+        user.setId(idWorker.nextId() + "");
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setFollowcount(0);
+        user.setFanscount(0);
+        user.setOnline(0L);
+        user.setRegdate(new Date());
+        user.setUpdatedate(new Date());
+        user.setLastdate(new Date());
+        userDao.save(user);
+    }
 
-	/**
-	 * Only admin can delete a user
-	 * @param id
-	 */
-	public void deleteById(String id) {
-		String token = (String) request.getAttribute("admin_claims");
-		if(token == null || "".equals(token))
-			throw new RuntimeException("Authorization failed");
-		userDao.deleteById(id);
-	}
+    public void update(User user) {
+        userDao.save(user);
+    }
 
-	private Specification<User> createSpecification(Map searchMap) {
+    /**
+     * Only admin can delete a user
+     *
+     * @param id
+     */
+    public void deleteById(String id) {
+        String token = (String) request.getAttribute("admin_claims");
+        if (token == null || "".equals(token))
+            throw new RuntimeException("Authorization failed");
+        userDao.deleteById(id);
+    }
 
-		return new Specification<User>() {
+    private Specification<User> createSpecification(Map searchMap) {
 
-			@Override
-			public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicateList = new ArrayList<Predicate>();
-                if (searchMap.get("id")!=null && !"".equals(searchMap.get("id"))) {
-                	predicateList.add(cb.like(root.get("id").as(String.class), "%"+(String)searchMap.get("id")+"%"));
+        return new Specification<User>() {
+
+            @Override
+            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicateList = new ArrayList<Predicate>();
+                if (searchMap.get("id") != null && !"".equals(searchMap.get("id"))) {
+                    predicateList.add(cb.like(root.get("id").as(String.class), "%" + (String) searchMap.get("id") + "%"));
                 }
-                if (searchMap.get("mobile")!=null && !"".equals(searchMap.get("mobile"))) {
-                	predicateList.add(cb.like(root.get("mobile").as(String.class), "%"+(String)searchMap.get("mobile")+"%"));
+                if (searchMap.get("mobile") != null && !"".equals(searchMap.get("mobile"))) {
+                    predicateList.add(cb.like(root.get("mobile").as(String.class), "%" + (String) searchMap.get("mobile") + "%"));
                 }
-                if (searchMap.get("password")!=null && !"".equals(searchMap.get("password"))) {
-                	predicateList.add(cb.like(root.get("password").as(String.class), "%"+(String)searchMap.get("password")+"%"));
+                if (searchMap.get("password") != null && !"".equals(searchMap.get("password"))) {
+                    predicateList.add(cb.like(root.get("password").as(String.class), "%" + (String) searchMap.get("password") + "%"));
                 }
-                if (searchMap.get("nickname")!=null && !"".equals(searchMap.get("nickname"))) {
-                	predicateList.add(cb.like(root.get("nickname").as(String.class), "%"+(String)searchMap.get("nickname")+"%"));
+                if (searchMap.get("nickname") != null && !"".equals(searchMap.get("nickname"))) {
+                    predicateList.add(cb.like(root.get("nickname").as(String.class), "%" + (String) searchMap.get("nickname") + "%"));
                 }
-                if (searchMap.get("sex")!=null && !"".equals(searchMap.get("sex"))) {
-                	predicateList.add(cb.like(root.get("sex").as(String.class), "%"+(String)searchMap.get("sex")+"%"));
+                if (searchMap.get("sex") != null && !"".equals(searchMap.get("sex"))) {
+                    predicateList.add(cb.like(root.get("sex").as(String.class), "%" + (String) searchMap.get("sex") + "%"));
                 }
-                if (searchMap.get("avatar")!=null && !"".equals(searchMap.get("avatar"))) {
-                	predicateList.add(cb.like(root.get("avatar").as(String.class), "%"+(String)searchMap.get("avatar")+"%"));
+                if (searchMap.get("avatar") != null && !"".equals(searchMap.get("avatar"))) {
+                    predicateList.add(cb.like(root.get("avatar").as(String.class), "%" + (String) searchMap.get("avatar") + "%"));
                 }
-                if (searchMap.get("email")!=null && !"".equals(searchMap.get("email"))) {
-                	predicateList.add(cb.like(root.get("email").as(String.class), "%"+(String)searchMap.get("email")+"%"));
+                if (searchMap.get("email") != null && !"".equals(searchMap.get("email"))) {
+                    predicateList.add(cb.like(root.get("email").as(String.class), "%" + (String) searchMap.get("email") + "%"));
                 }
-                if (searchMap.get("interest")!=null && !"".equals(searchMap.get("interest"))) {
-                	predicateList.add(cb.like(root.get("interest").as(String.class), "%"+(String)searchMap.get("interest")+"%"));
+                if (searchMap.get("interest") != null && !"".equals(searchMap.get("interest"))) {
+                    predicateList.add(cb.like(root.get("interest").as(String.class), "%" + (String) searchMap.get("interest") + "%"));
                 }
-                if (searchMap.get("personality")!=null && !"".equals(searchMap.get("personality"))) {
-                	predicateList.add(cb.like(root.get("personality").as(String.class), "%"+(String)searchMap.get("personality")+"%"));
+                if (searchMap.get("personality") != null && !"".equals(searchMap.get("personality"))) {
+                    predicateList.add(cb.like(root.get("personality").as(String.class), "%" + (String) searchMap.get("personality") + "%"));
                 }
-				
-				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
+                return cb.and(predicateList.toArray(new Predicate[predicateList.size()]));
+            }
+        };
+    }
 
-			}
-		};
+    // Generate text verification code, save to Redis and send to RabbitMQ
+    public void sendSms(String mobile) {
+        //generate 6 random numbers
+        String random = RandomStringUtils.randomNumeric(6);
+        //put a copy in redis, expire after 1 hour
+        redisTemplate.opsForValue().set("verificationCode_" + mobile, random, 1, TimeUnit.HOURS);
+        System.out.println("Verification code is " + random);
+        //send to new user, but we are not going to wait for it. So put it in MQ
+        Map<String, String> map = new HashMap<>();
+        map.put("mobile", mobile);
+        map.put("verificationCode", random);
+        rabbitTemplate.convertAndSend("sms", map);
+    }
 
-	}
-	// Generate text verification code, save to Redis and send to RabbitMQ
-	public void sendSms(String mobile) {
-		//generate 6 random numbers
-		String random = RandomStringUtils.randomNumeric(6);
-		//put a copy in redis, expire after 1 hour
-		redisTemplate.opsForValue().set("verificationCode_" + mobile, random, 1, TimeUnit.HOURS);
-		System.out.println("Verification code is " + random);
-		//send to new user, but we are not going to wait for it. So put it in MQ
-		Map<String, String> map = new HashMap<>();
-		map.put("mobile", mobile);
-		map.put("verificationCode", random);
-		rabbitTemplate.convertAndSend("sms", map);
-	}
+    public User login(String mobile, String password) {
+        //find user by mobile phone number
+        User user = userDao.findByMobile(mobile);
+        if (user != null && bCryptPasswordEncoder.matches(password, user.getPassword())) {
+            return user;
+        }
+        return null;
+    }
 
-	public User login(String mobile, String password) {
-		//find user by mobile phone number
-		User user = userDao.findByMobile(mobile);
-		if(user != null && bCryptPasswordEncoder.matches(password, user.getPassword())){
-			return user;
-		}
-		return null;
-	}
-
-	public void updateFanscountAndFollowcount(int x, String userid, String friendid) {
-		userDao.updateFanscount(x, friendid);
-		userDao.updateFollowcount(x, userid);
-	}
+    public void updateFanscountAndFollowcount(int x, String userid, String friendid) {
+        userDao.updateFanscount(x, friendid);
+        userDao.updateFollowcount(x, userid);
+    }
 }

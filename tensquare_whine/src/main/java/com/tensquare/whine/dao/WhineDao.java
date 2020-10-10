@@ -7,5 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface WhineDao extends MongoRepository<Whine, String> {
 
-    public Page<Whine> findByParentid(String parentid, Pageable pageable);
+    public Page<Whine> findByParentId(String parentid, Pageable pageable);
 }

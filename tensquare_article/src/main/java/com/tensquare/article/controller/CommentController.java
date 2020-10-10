@@ -16,19 +16,19 @@ public class CommentController {
     private CommentService commentService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Result save(@RequestBody Comment comment){
+    public Result save(@RequestBody Comment comment) {
         commentService.save(comment);
         return new Result(true, StatusCode.OK, "Save Success");
     }
 
     @RequestMapping(value = "/{articleid}/{page}/{size}", method = RequestMethod.GET)
-    public Result findByParentid(@PathVariable String articleid, @PathVariable int page, @PathVariable int size){
+    public Result findByParentid(@PathVariable String articleid, @PathVariable int page, @PathVariable int size) {
         Page<Comment> pageData = commentService.findByArticleid(articleid, page, size);
         return new Result(true, StatusCode.OK, "Query Successful", new PageResult<Comment>(pageData.getTotalElements(), pageData.getContent()));
     }
 
     @RequestMapping(value = "/{commentid}", method = RequestMethod.DELETE)
-    public Result delete(@PathVariable String commentid){
+    public Result delete(@PathVariable String commentid) {
         commentService.deleteById(commentid);
         return new Result(true, StatusCode.OK, "Delete Successful");
     }

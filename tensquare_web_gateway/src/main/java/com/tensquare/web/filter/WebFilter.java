@@ -33,7 +33,7 @@ public class WebFilter extends ZuulFilter {
         HttpServletRequest request = requestContext.getRequest();
         String header = request.getHeader("Authorization");
         // if header is available
-        if(header != null && !"".equals(header)){
+        if (header != null && !"".equals(header)) {
             requestContext.addZuulRequestHeader("Authorization", header);
         }
         return null;

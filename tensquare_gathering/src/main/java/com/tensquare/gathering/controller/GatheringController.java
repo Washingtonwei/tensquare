@@ -1,4 +1,5 @@
 package com.tensquare.gathering.controller;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,48 +23,47 @@ import entity.StatusCode;
 @RequestMapping("/gathering")
 public class GatheringController {
 
-	@Autowired
-	private GatheringService gatheringService;
+    @Autowired
+    private GatheringService gatheringService;
 
-	@RequestMapping(method= RequestMethod.GET)
-	public Result findAll(){
-		return new Result(true,StatusCode.OK,"Query Success",gatheringService.findAll());
-	}
-	
-	@RequestMapping(value="/{id}",method= RequestMethod.GET)
-	public Result findById(@PathVariable String id){
-		return new Result(true,StatusCode.OK,"Query Success",gatheringService.findById(id));
-	}
-
-
-	@RequestMapping(value="/search/{page}/{size}",method=RequestMethod.POST)
-	public Result findSearch(@RequestBody Map searchMap , @PathVariable int page, @PathVariable int size){
-		Page<Gathering> pageList = gatheringService.findSearch(searchMap, page, size);
-		return  new Result(true,StatusCode.OK,"Query Success",  new PageResult<Gathering>(pageList.getTotalElements(), pageList.getContent()) );
-	}
-
-    @RequestMapping(value="/search",method = RequestMethod.POST)
-    public Result findSearch( @RequestBody Map searchMap){
-        return new Result(true,StatusCode.OK,"Query Success",gatheringService.findSearch(searchMap));
+    @RequestMapping(method = RequestMethod.GET)
+    public Result findAll() {
+        return new Result(true, StatusCode.OK, "Query Success", gatheringService.findAll());
     }
 
-	@RequestMapping(method=RequestMethod.POST)
-	public Result add(@RequestBody Gathering gathering  ){
-		gatheringService.add(gathering);
-		return new Result(true,StatusCode.OK,"Create Success");
-	}
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Result findById(@PathVariable String id) {
+        return new Result(true, StatusCode.OK, "Query Success", gatheringService.findById(id));
+    }
 
-	@RequestMapping(value="/{id}",method= RequestMethod.PUT)
-	public Result update(@RequestBody Gathering gathering, @PathVariable String id ){
-		gathering.setId(id);
-		gatheringService.update(gathering);		
-		return new Result(true,StatusCode.OK,"Update Success");
-	}
 
-	@RequestMapping(value="/{id}",method= RequestMethod.DELETE)
-	public Result delete(@PathVariable String id ){
-		gatheringService.deleteById(id);
-		return new Result(true,StatusCode.OK,"Delete Success");
-	}
-	
+    @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.POST)
+    public Result findSearch(@RequestBody Map searchMap, @PathVariable int page, @PathVariable int size) {
+        Page<Gathering> pageList = gatheringService.findSearch(searchMap, page, size);
+        return new Result(true, StatusCode.OK, "Query Success", new PageResult<Gathering>(pageList.getTotalElements(), pageList.getContent()));
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public Result findSearch(@RequestBody Map searchMap) {
+        return new Result(true, StatusCode.OK, "Query Success", gatheringService.findSearch(searchMap));
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public Result add(@RequestBody Gathering gathering) {
+        gatheringService.add(gathering);
+        return new Result(true, StatusCode.OK, "Create Success");
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Result update(@RequestBody Gathering gathering, @PathVariable String id) {
+        gathering.setId(id);
+        gatheringService.update(gathering);
+        return new Result(true, StatusCode.OK, "Update Success");
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public Result delete(@PathVariable String id) {
+        gatheringService.deleteById(id);
+        return new Result(true, StatusCode.OK, "Delete Success");
+    }
 }

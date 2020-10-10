@@ -22,83 +22,80 @@ import java.util.Map;
 @Service
 public class AdminService {
 
-	@Autowired
-	private AdminDao adminDao;
-	
-	@Autowired
-	private IdWorker idWorker;
+    @Autowired
+    private AdminDao adminDao;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private IdWorker idWorker;
 
-	public List<Admin> findAll() {
-		return adminDao.findAll();
-	}
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public Page<Admin> findSearch(Map whereMap, int page, int size) {
-		Specification<Admin> specification = createSpecification(whereMap);
-		PageRequest pageRequest =  PageRequest.of(page-1, size);
-		return adminDao.findAll(specification, pageRequest);
-	}
+    public List<Admin> findAll() {
+        return adminDao.findAll();
+    }
 
-	public List<Admin> findSearch(Map whereMap) {
-		Specification<Admin> specification = createSpecification(whereMap);
-		return adminDao.findAll(specification);
-	}
+    public Page<Admin> findSearch(Map whereMap, int page, int size) {
+        Specification<Admin> specification = createSpecification(whereMap);
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        return adminDao.findAll(specification, pageRequest);
+    }
 
-	public Admin findById(String id) {
-		return adminDao.findById(id).get();
-	}
+    public List<Admin> findSearch(Map whereMap) {
+        Specification<Admin> specification = createSpecification(whereMap);
+        return adminDao.findAll(specification);
+    }
 
-	public void add(Admin admin) {
-		admin.setId( idWorker.nextId()+"" );
-		admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
-		adminDao.save(admin);
-	}
+    public Admin findById(String id) {
+        return adminDao.findById(id).get();
+    }
 
-	public void update(Admin admin) {
-		adminDao.save(admin);
-	}
+    public void add(Admin admin) {
+        admin.setId(idWorker.nextId() + "");
+        admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
+        adminDao.save(admin);
+    }
 
-	public void deleteById(String id) {
-		adminDao.deleteById(id);
-	}
+    public void update(Admin admin) {
+        adminDao.save(admin);
+    }
 
-	private Specification<Admin> createSpecification(Map searchMap) {
+    public void deleteById(String id) {
+        adminDao.deleteById(id);
+    }
 
-		return new Specification<Admin>() {
+    private Specification<Admin> createSpecification(Map searchMap) {
 
-			@Override
-			public Predicate toPredicate(Root<Admin> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicateList = new ArrayList<Predicate>();
-                if (searchMap.get("id")!=null && !"".equals(searchMap.get("id"))) {
-                	predicateList.add(cb.like(root.get("id").as(String.class), "%"+(String)searchMap.get("id")+"%"));
+        return new Specification<Admin>() {
+
+            @Override
+            public Predicate toPredicate(Root<Admin> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicateList = new ArrayList<Predicate>();
+                if (searchMap.get("id") != null && !"".equals(searchMap.get("id"))) {
+                    predicateList.add(cb.like(root.get("id").as(String.class), "%" + (String) searchMap.get("id") + "%"));
                 }
-                if (searchMap.get("loginname")!=null && !"".equals(searchMap.get("loginname"))) {
-                	predicateList.add(cb.like(root.get("loginname").as(String.class), "%"+(String)searchMap.get("loginname")+"%"));
+                if (searchMap.get("loginname") != null && !"".equals(searchMap.get("loginname"))) {
+                    predicateList.add(cb.like(root.get("loginname").as(String.class), "%" + (String) searchMap.get("loginname") + "%"));
                 }
-                if (searchMap.get("password")!=null && !"".equals(searchMap.get("password"))) {
-                	predicateList.add(cb.like(root.get("password").as(String.class), "%"+(String)searchMap.get("password")+"%"));
+                if (searchMap.get("password") != null && !"".equals(searchMap.get("password"))) {
+                    predicateList.add(cb.like(root.get("password").as(String.class), "%" + (String) searchMap.get("password") + "%"));
                 }
-                if (searchMap.get("state")!=null && !"".equals(searchMap.get("state"))) {
-                	predicateList.add(cb.like(root.get("state").as(String.class), "%"+(String)searchMap.get("state")+"%"));
+                if (searchMap.get("state") != null && !"".equals(searchMap.get("state"))) {
+                    predicateList.add(cb.like(root.get("state").as(String.class), "%" + (String) searchMap.get("state") + "%"));
                 }
-				
-				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
 
-			}
-		};
-
-	}
+                return cb.and(predicateList.toArray(new Predicate[predicateList.size()]));
+            }
+        };
+    }
 
     public Admin login(Admin admin) {
-		//find by user name first
-		Admin returnedAdmin = adminDao.findByLoginname(admin.getLoginname());
-		//Compare passwords
-		if(returnedAdmin != null && bCryptPasswordEncoder.matches(admin.getPassword(), returnedAdmin.getPassword())){
-			return returnedAdmin;
-		}
-		return null;
-
+        //find by user name first
+        Admin returnedAdmin = adminDao.findByLoginname(admin.getLoginname());
+        //Compare passwords
+        if (returnedAdmin != null && bCryptPasswordEncoder.matches(admin.getPassword(), returnedAdmin.getPassword())) {
+            return returnedAdmin;
+        }
+        return null;
     }
 }

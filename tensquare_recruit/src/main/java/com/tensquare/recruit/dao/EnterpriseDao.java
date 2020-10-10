@@ -7,6 +7,6 @@ import com.tensquare.recruit.pojo.Enterprise;
 
 import java.util.List;
 
-public interface EnterpriseDao extends JpaRepository<Enterprise,String>,JpaSpecificationExecutor<Enterprise>{
-	public List<Enterprise> findByIshot(String ishot);//where ishot = ?
+public interface EnterpriseDao extends JpaRepository<Enterprise, String>, JpaSpecificationExecutor<Enterprise> {
+    public List<Enterprise> findByIshot(String ishot);//where ishot = ?
 }

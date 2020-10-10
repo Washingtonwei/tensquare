@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.tensquare.qa.pojo.Reply;
 
-public interface ReplyDao extends JpaRepository<Reply,String>,JpaSpecificationExecutor<Reply>{
-	
+public interface ReplyDao extends JpaRepository<Reply, String>, JpaSpecificationExecutor<Reply> {
+
 }

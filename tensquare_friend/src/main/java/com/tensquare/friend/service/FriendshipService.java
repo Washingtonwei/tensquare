@@ -21,8 +21,8 @@ public class FriendshipService {
     public int addFriend(String userid, String friendid) {
         //first, tell if (userid, friendid) is already in DB
         //In other words, if userid has already liked friendid, we do nothing
-        Friend friend = friendDao.findByUseridAndFriendid(userid, friendid);
-        if(friend != null){
+        Friend friend = friendDao.findByUserIdAndFriendId(userid, friendid);
+        if (friend != null) {
             return 0;
         }
         //add (userid, friendid, 0) to DB
@@ -34,7 +34,7 @@ public class FriendshipService {
 
         //tell if (friendid, userid) is already in DB, if so, change from 0 to 1
         //In other words, does friendid already liked userid?
-        if(friendDao.findByUseridAndFriendid(friendid, userid) != null){
+        if (friendDao.findByUserIdAndFriendId(friendid, userid) != null) {
             friendDao.updateIslike("1", userid, friendid);
             friendDao.updateIslike("1", friendid, userid);
         }
@@ -42,9 +42,9 @@ public class FriendshipService {
     }
 
     public int addDislike(String userid, String personid) {
-        Dislike dislike = dislikeDao.findByUseridAndPersonid(userid, personid);
+        Dislike dislike = dislikeDao.findByUseridAndPersonId(userid, personid);
         //If userid has already disliked personid
-        if(dislike != null){
+        if (dislike != null) {
             return 0;
         }
         dislike = new Dislike();

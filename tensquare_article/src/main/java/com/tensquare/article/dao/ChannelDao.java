@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.tensquare.article.pojo.Channel;
 
-public interface ChannelDao extends JpaRepository<Channel,String>,JpaSpecificationExecutor<Channel>{
-	
+public interface ChannelDao extends JpaRepository<Channel, String>, JpaSpecificationExecutor<Channel> {
+
 }

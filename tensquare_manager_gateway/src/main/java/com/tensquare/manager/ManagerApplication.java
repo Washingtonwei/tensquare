@@ -16,7 +16,7 @@ public class ManagerApplication {
     }
 
     @Bean
-    public JwtUtil jwtUtil(){
+    public JwtUtil jwtUtil() {
         return new JwtUtil();
     }
 }

@@ -27,63 +27,61 @@ import com.tensquare.article.pojo.Channel;
 @Service
 public class ChannelService {
 
-	@Autowired
-	private ChannelDao channelDao;
-	
-	@Autowired
-	private IdWorker idWorker;
+    @Autowired
+    private ChannelDao channelDao;
 
-	public List<Channel> findAll() {
-		return channelDao.findAll();
-	}
+    @Autowired
+    private IdWorker idWorker;
 
-	public Page<Channel> findSearch(Map whereMap, int page, int size) {
-		Specification<Channel> specification = createSpecification(whereMap);
-		PageRequest pageRequest =  PageRequest.of(page-1, size);
-		return channelDao.findAll(specification, pageRequest);
-	}
+    public List<Channel> findAll() {
+        return channelDao.findAll();
+    }
 
-	public List<Channel> findSearch(Map whereMap) {
-		Specification<Channel> specification = createSpecification(whereMap);
-		return channelDao.findAll(specification);
-	}
+    public Page<Channel> findSearch(Map whereMap, int page, int size) {
+        Specification<Channel> specification = createSpecification(whereMap);
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        return channelDao.findAll(specification, pageRequest);
+    }
 
-	public Channel findById(String id) {
-		return channelDao.findById(id).get();
-	}
+    public List<Channel> findSearch(Map whereMap) {
+        Specification<Channel> specification = createSpecification(whereMap);
+        return channelDao.findAll(specification);
+    }
 
-	public void add(Channel channel) {
-		channel.setId( idWorker.nextId()+"" );
-		channelDao.save(channel);
-	}
+    public Channel findById(String id) {
+        return channelDao.findById(id).get();
+    }
 
-	public void update(Channel channel) {
-		channelDao.save(channel);
-	}
+    public void add(Channel channel) {
+        channel.setId(idWorker.nextId() + "");
+        channelDao.save(channel);
+    }
 
-	public void deleteById(String id) {
-		channelDao.deleteById(id);
-	}
+    public void update(Channel channel) {
+        channelDao.save(channel);
+    }
 
-	private Specification<Channel> createSpecification(Map searchMap) {
+    public void deleteById(String id) {
+        channelDao.deleteById(id);
+    }
 
-		return new Specification<Channel>() {
+    private Specification<Channel> createSpecification(Map searchMap) {
 
-			@Override
-			public Predicate toPredicate(Root<Channel> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicateList = new ArrayList<Predicate>();
-                if (searchMap.get("id")!=null && !"".equals(searchMap.get("id"))) {
-                	predicateList.add(cb.like(root.get("id").as(String.class), "%"+(String)searchMap.get("id")+"%"));
+        return new Specification<Channel>() {
+            @Override
+            public Predicate toPredicate(Root<Channel> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicateList = new ArrayList<Predicate>();
+                if (searchMap.get("id") != null && !"".equals(searchMap.get("id"))) {
+                    predicateList.add(cb.like(root.get("id").as(String.class), "%" + (String) searchMap.get("id") + "%"));
                 }
-                if (searchMap.get("name")!=null && !"".equals(searchMap.get("name"))) {
-                	predicateList.add(cb.like(root.get("name").as(String.class), "%"+(String)searchMap.get("name")+"%"));
+                if (searchMap.get("name") != null && !"".equals(searchMap.get("name"))) {
+                    predicateList.add(cb.like(root.get("name").as(String.class), "%" + (String) searchMap.get("name") + "%"));
                 }
-                if (searchMap.get("state")!=null && !"".equals(searchMap.get("state"))) {
-                	predicateList.add(cb.like(root.get("state").as(String.class), "%"+(String)searchMap.get("state")+"%"));
+                if (searchMap.get("state") != null && !"".equals(searchMap.get("state"))) {
+                    predicateList.add(cb.like(root.get("state").as(String.class), "%" + (String) searchMap.get("state") + "%"));
                 }
-				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
-
-			}
-		};
-	}
+                return cb.and(predicateList.toArray(new Predicate[predicateList.size()]));
+            }
+        };
+    }
 }

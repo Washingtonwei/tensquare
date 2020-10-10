@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
-public interface ProblemDao extends JpaRepository<Problem,String>,JpaSpecificationExecutor<Problem>{
+public interface ProblemDao extends JpaRepository<Problem, String>, JpaSpecificationExecutor<Problem> {
 
     @Query(value = "SELECT * FROM tb_problem, tb_pl WHERE id = problemid AND labelid=? ORDER BY replytime DESC", nativeQuery = true)
     public Page<Problem> newlist(String labelid, Pageable pageable);

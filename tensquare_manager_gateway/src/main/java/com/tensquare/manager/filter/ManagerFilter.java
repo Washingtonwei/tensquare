@@ -37,25 +37,25 @@ public class ManagerFilter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         //There are two special requests we need not to check header's authorization
-        if(request.getMethod().equals("OPTIONS")){
+        if (request.getMethod().equals("OPTIONS")) {
             return null;
         }
-        if(request.getRequestURL().indexOf("login") > 0){
+        if (request.getRequestURL().indexOf("login") > 0) {
             return null;
         }
         String header = request.getHeader("Authorization");
-        if(header != null && !"".equals(header)){
-            if(header.startsWith("Bearer ")){
+        if (header != null && !"".equals(header)) {
+            if (header.startsWith("Bearer ")) {
                 String token = header.substring(7);
-                try{
+                try {
                     Claims claims = jwtUtil.parseJWT(token);
                     String roles = (String) claims.get("roles");
-                    if(roles.equals("admin")){
+                    if (roles.equals("admin")) {
                         //redirect header, let it pass
                         requestContext.addZuulRequestHeader("Authorization", header);
                         return null;
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     requestContext.setSendZuulResponse(false);
                 }
             }
